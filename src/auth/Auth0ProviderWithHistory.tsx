@@ -8,6 +8,7 @@ interface Auth0ProviderWithHistoryProps {
 const Auth0ProviderWithHistory = ({ children }: Auth0ProviderWithHistoryProps) => {
     const domain = process.env.REACT_APP_AUTH0_DOMAIN as string;
     const clientId = process.env.REACT_APP_AUTH0_CLIENT_ID as string;
+    const audience = process.env.REACT_APP_AUTH0_AUDIENCE as string;
 
     const navigate = useNavigate();
 
@@ -17,10 +18,12 @@ const Auth0ProviderWithHistory = ({ children }: Auth0ProviderWithHistoryProps) =
 
     return (
         <Auth0Provider
+            audience={audience}
             domain={domain}
             clientId={clientId}
             redirectUri={window.location.origin}
             onRedirectCallback={onRedirectCallback}
+            scope={'read:current_user update:current_user_metadata'}
         >
             {children}
         </Auth0Provider>
