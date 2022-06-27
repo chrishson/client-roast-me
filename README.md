@@ -1,4 +1,14 @@
-## Prettier Setup
+# RoastMe
+
+Track your coffee drinking habits.
+
+## Developer Information
+
+### Node Version
+
+16.15.1
+
+### Prettier Setup
 
 1. Install the **Prettier - Code formatter** extension
 2. Add the following to your **settings.json** file for **User**:
