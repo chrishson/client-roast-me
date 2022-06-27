@@ -7,29 +7,30 @@ export function Main() {
     const { getAccessTokenSilently } = useAuth0();
     const [coffees, setCoffees] = useState([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [isBadRequest, setIsBadRequest] = useState<boolean>(false);
     const headers = [{ name: "created" }, { name: "size" }];
 
     useEffect(() => {
         setTimeout(() => {
             (async () => {
-                try {
-                    const token = await getAccessTokenSilently();
-                    const response = await fetch(
-                        "http://localhost:3010/api/coffees",
-                        {
-                            method: "GET",
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        }
-                    );
-
-                    if (response.ok) {
-                        setIsLoading(false);
-                        setCoffees(await response.json());
+                const token = await getAccessTokenSilently();
+                const response = await fetch(
+                    "http://localhost:3010/api/coffees",
+                    {
+                        method: "GET",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
                     }
-                } catch (e) {
-                    console.error(e);
+                );
+
+                if (response.ok) {
+                    setIsLoading(false);
+                    setCoffees(await response.json());
+                }
+
+                if (!response.ok) {
+                    setIsBadRequest(true);
                 }
             })();
         }, 1000);
@@ -44,11 +45,13 @@ export function Main() {
                     {coffees.length > 0 ? (
                         <CoffeeTable headers={headers} rows={coffees} />
                     ) : (
-                        <div>EMPTY</div>
+                        <div>{"EMPTY"}</div>
                     )}
                 </React.Fragment>
             ) : (
-                <div>LOADING</div>
+                <div>
+                    {isBadRequest ? "ERROR WITH FETCHING COFFEES" : "LOADING"}
+                </div>
             )}
         </div>
     );
