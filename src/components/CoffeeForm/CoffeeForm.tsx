@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { Box, Button } from "@chakra-ui/react";
 import { useState } from "react";
-import "./CoffeeForm.css";
 
 interface CoffeeFormProps {
     setCoffees: Function;
@@ -15,6 +15,11 @@ enum COFFEE_SIZES {
 export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     const { getAccessTokenSilently } = useAuth0();
     const [coffeeSize, setCoffeSize] = useState(COFFEE_SIZES.MEDIUM);
+
+    const getBackgroundColor = (test: COFFEE_SIZES) => {
+        return coffeeSize === test ? "limegreen" : undefined;
+    }
+
     const handleClick = (coffeeSize: COFFEE_SIZES) => {
         setCoffeSize(coffeeSize);
     };
@@ -46,38 +51,26 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     };
 
     return (
-        <div>
-            <button
-                className={
-                    coffeeSize === COFFEE_SIZES.SMALL
-                        ? "button-active"
-                        : undefined
-                }
+        <Box>
+            <Button
+                backgroundColor={getBackgroundColor(COFFEE_SIZES.SMALL)}
                 onClick={() => handleClick(COFFEE_SIZES.SMALL)}
             >
                 {COFFEE_SIZES.SMALL}
-            </button>
-            <button
-                className={
-                    coffeeSize === COFFEE_SIZES.MEDIUM
-                        ? "button-active"
-                        : undefined
-                }
+            </Button>
+            <Button
+                backgroundColor={getBackgroundColor(COFFEE_SIZES.MEDIUM)}
                 onClick={() => handleClick(COFFEE_SIZES.MEDIUM)}
             >
                 {COFFEE_SIZES.MEDIUM}
-            </button>
-            <button
-                className={
-                    coffeeSize === COFFEE_SIZES.LARGE
-                        ? "button-active"
-                        : undefined
-                }
+            </Button>
+            <Button
+                backgroundColor={getBackgroundColor(COFFEE_SIZES.LARGE)}
                 onClick={() => handleClick(COFFEE_SIZES.LARGE)}
             >
                 {COFFEE_SIZES.LARGE}
-            </button>
-            <button onClick={handleSubmit}>SUBMIT</button>
-        </div>
+            </Button>
+            <Button onClick={handleSubmit}>SUBMIT</Button>
+        </Box>
     );
 }
