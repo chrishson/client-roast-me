@@ -2,6 +2,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Button } from "@chakra-ui/react";
 import { useState } from "react";
 
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 interface CoffeeFormProps {
     setCoffees: Function;
 }
@@ -15,6 +18,7 @@ enum COFFEE_SIZES {
 export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     const { getAccessTokenSilently } = useAuth0();
     const [coffeeSize, setCoffeSize] = useState(COFFEE_SIZES.MEDIUM);
+    const [date, setDate] = useState(new Date());
 
     const getBackgroundColor = (test: COFFEE_SIZES) => {
         return coffeeSize === test ? "limegreen" : undefined;
@@ -28,8 +32,9 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
         (async () => {
             const data = {
                 size: coffeeSize,
-                consumption_date: new Date(),
+                consumption_date: date,
             };
+
             try {
                 const token = await getAccessTokenSilently();
                 const response = await fetch(
@@ -52,6 +57,9 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
 
     return (
         <Box>
+            <Box mb={5}>
+                <DatePicker selected={date} onChange={(date: Date) => setDate(date)} />
+            </Box>
             <Button
                 backgroundColor={getBackgroundColor(COFFEE_SIZES.SMALL)}
                 onClick={() => handleClick(COFFEE_SIZES.SMALL)}
