@@ -1,5 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import React, { useEffect, useState } from "react";
+import { Box, Text } from "@chakra-ui/react";
+import { Fragment, useEffect, useState } from "react";
+import { CoffeeChart } from "./CoffeeChart/CoffeeChart";
 import { CoffeeForm } from "./CoffeeForm/CoffeeForm";
 import { CoffeeTable } from "./CoffeeTable/CoffeeTable";
 
@@ -37,22 +39,25 @@ export function Main() {
     }, [getAccessTokenSilently]);
 
     return (
-        <div>
+        <Box>
             {!isLoading ? (
-                <React.Fragment>
+                <Fragment>
+                    <Box height={'500px'}>
+                        <CoffeeChart />
+                    </Box>
                     <CoffeeForm setCoffees={setCoffees} />
 
                     {coffees.length > 0 ? (
                         <CoffeeTable headers={headers} rows={coffees} />
                     ) : (
-                        <div>{"EMPTY"}</div>
+                        <Text>{"EMPTY"}</Text>
                     )}
-                </React.Fragment>
+                </Fragment>
             ) : (
-                <div>
+                <Text>
                     {isBadRequest ? "ERROR WITH FETCHING COFFEES" : "LOADING"}
-                </div>
+                </Text>
             )}
-        </div>
+        </Box>
     );
 }

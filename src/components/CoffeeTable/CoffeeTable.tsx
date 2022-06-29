@@ -1,3 +1,5 @@
+import { Table, Tbody, Td, Thead, Tr } from "@chakra-ui/react";
+
 interface Header {
     name: string;
 }
@@ -19,28 +21,28 @@ interface TableProps {
 
 export function CoffeeTableRow({ coffee }: CoffeeTableRowProps) {
     return (
-        <tr>
-            <td>{coffee.consumption_date}</td>
-            <td>{coffee.size}</td>
-        </tr>
+        <Tr>
+            <Td>{coffee.consumption_date}</Td>
+            <Td>{coffee.size}</Td>
+        </Tr>
     );
 }
 
 export function CoffeeTable({ headers, rows }: TableProps) {
     return (
-        <table>
-            <thead>
-                <tr>
+        <Table>
+            <Thead>
+                <Tr>
                     {headers.map((header: Header, key: number) => {
                         return <th key={key}> {header.name} </th>;
                     })}
-                </tr>
-            </thead>
-            <tbody>
+                </Tr>
+            </Thead>
+            <Tbody>
                 {rows.map((coffee: Coffee, key: number) => {
                     return <CoffeeTableRow coffee={coffee} key={key} />;
                 })}
-            </tbody>
-        </table>
+            </Tbody>
+        </Table>
     );
 }

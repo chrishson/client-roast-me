@@ -4,6 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react'
 import Auth0ProviderWithHistory from "./auth/Auth0ProviderWithHistory";
 
 const root = ReactDOM.createRoot(
@@ -13,7 +14,9 @@ root.render(
     <React.StrictMode>
         <BrowserRouter>
             <Auth0ProviderWithHistory>
-                <App />
+                <ChakraProvider>
+                    <App />
+                </ChakraProvider>
             </Auth0ProviderWithHistory>
         </BrowserRouter>
     </React.StrictMode>
