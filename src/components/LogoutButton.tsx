@@ -1,9 +1,10 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import { MenuItem } from '@chakra-ui/react';
 
 const LogoutButton = () => {
     const { logout } = useAuth0();
     return (
-        <button
+        <MenuItem
             onClick={() =>
                 logout({
                     returnTo: window.location.origin,
@@ -11,7 +12,7 @@ const LogoutButton = () => {
             }
         >
             Log Out
-        </button>
+        </MenuItem>
     );
 };
 

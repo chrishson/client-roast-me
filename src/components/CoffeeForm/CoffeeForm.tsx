@@ -1,12 +1,13 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button } from "@chakra-ui/react";
+import { Button, HStack, VStack } from "@chakra-ui/react";
 import { useState } from "react";
+import { CoffeeCup } from "../../icons/CoffeeCup";
 
 interface CoffeeFormProps {
     setCoffees: Function;
 }
 
-enum COFFEE_SIZES {
+export enum COFFEE_SIZES {
     SMALL = "SMALL",
     MEDIUM = "MEDIUM",
     LARGE = "LARGE",
@@ -16,8 +17,8 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     const { getAccessTokenSilently } = useAuth0();
     const [coffeeSize, setCoffeSize] = useState(COFFEE_SIZES.MEDIUM);
 
-    const getBackgroundColor = (test: COFFEE_SIZES) => {
-        return coffeeSize === test ? "limegreen" : undefined;
+    const getBackgroundColor = (size: COFFEE_SIZES) => {
+        return coffeeSize === size ? "limegreen" : undefined;
     }
 
     const handleClick = (coffeeSize: COFFEE_SIZES) => {
@@ -30,6 +31,7 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
                 size: coffeeSize,
                 consumption_date: new Date(),
             };
+
             try {
                 const token = await getAccessTokenSilently();
                 const response = await fetch(
@@ -51,26 +53,25 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     };
 
     return (
-        <Box>
-            <Button
-                backgroundColor={getBackgroundColor(COFFEE_SIZES.SMALL)}
-                onClick={() => handleClick(COFFEE_SIZES.SMALL)}
-            >
-                {COFFEE_SIZES.SMALL}
-            </Button>
-            <Button
-                backgroundColor={getBackgroundColor(COFFEE_SIZES.MEDIUM)}
-                onClick={() => handleClick(COFFEE_SIZES.MEDIUM)}
-            >
-                {COFFEE_SIZES.MEDIUM}
-            </Button>
-            <Button
-                backgroundColor={getBackgroundColor(COFFEE_SIZES.LARGE)}
-                onClick={() => handleClick(COFFEE_SIZES.LARGE)}
-            >
-                {COFFEE_SIZES.LARGE}
-            </Button>
+        <VStack>
+            <HStack>
+                <CoffeeCup
+                    boxSize={'100px'}
+                    onClick={() => { handleClick(COFFEE_SIZES.SMALL) }}
+                    color={getBackgroundColor(COFFEE_SIZES.SMALL)}
+                />
+                <CoffeeCup
+                    boxSize={'120px'}
+                    onClick={() => { handleClick(COFFEE_SIZES.MEDIUM) }}
+                    color={getBackgroundColor(COFFEE_SIZES.MEDIUM)}
+                />
+                <CoffeeCup
+                    boxSize={'140px'}
+                    onClick={() => { handleClick(COFFEE_SIZES.LARGE) }}
+                    color={getBackgroundColor(COFFEE_SIZES.LARGE)}
+                />
+            </HStack>
             <Button onClick={handleSubmit}>SUBMIT</Button>
-        </Box>
+        </VStack>
     );
 }

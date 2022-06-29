@@ -1,7 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { Box, Text } from "@chakra-ui/react";
 import { Fragment, useEffect, useState } from "react";
-import { CoffeeChart } from "./CoffeeChart/CoffeeChart";
 import { CoffeeForm } from "./CoffeeForm/CoffeeForm";
 import { CoffeeTable } from "./CoffeeTable/CoffeeTable";
 
@@ -10,7 +9,7 @@ export function Main() {
     const [coffees, setCoffees] = useState([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [isBadRequest, setIsBadRequest] = useState<boolean>(false);
-    const headers = [{ name: "created" }, { name: "size" }];
+    const headers = [{ name: "Consumption Date" }, { name: "Size" }];
 
     useEffect(() => {
         setTimeout(() => {
@@ -39,12 +38,9 @@ export function Main() {
     }, [getAccessTokenSilently]);
 
     return (
-        <Box>
+        <Box margin={5}>
             {!isLoading ? (
                 <Fragment>
-                    <Box height={'500px'}>
-                        <CoffeeChart />
-                    </Box>
                     <CoffeeForm setCoffees={setCoffees} />
 
                     {coffees.length > 0 ? (
