@@ -58,7 +58,11 @@ export function CoffeeForm({ setCoffees }: CoffeeFormProps) {
     return (
         <Box>
             <Box mb={5}>
-                <DatePicker selected={date} onChange={(date: Date) => setDate(date)} />
+                <DatePicker
+                    showTimeSelect
+                    timeFormat="HH:mm"
+                    timeIntervals={15}
+                    selected={date} onChange={(date: Date) => setDate(date)} />
             </Box>
             <Button
                 backgroundColor={getBackgroundColor(COFFEE_SIZES.SMALL)}
