@@ -22,7 +22,7 @@ interface TableProps {
 export function CoffeeTableRow({ coffee }: CoffeeTableRowProps) {
     return (
         <Tr>
-            <Td>{coffee.consumption_date}</Td>
+            <Td>{new Date(coffee.consumption_date).toString()}</Td>
             <Td>{coffee.size}</Td>
         </Tr>
     );
